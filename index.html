@@ -1,18 +1,54 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
+<head>
+  <style>
+    form {
+      font-family: sans-serif;
+      color: rgb(0, 0, 0);
+      font-size: 16px;
+    }
+    button {
+      background-color: #ff0000;
+      border: none;
+      color: rgb(234, 255, 0);
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+    div {
+      font-family: sans-serif;
+      color: #333;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  请输入今天的数据：
   <form>
     风速：<input type="number" id="windSpeed"><br>
     体感温度：<input type="number" id="feltTemperature"><br>
   </form>
   <button onclick="calculateDressingIndex()">计算穿衣指数</button>
   <div id="result"></div>
-  
   <script>
     function calculateDressingIndex() {
       // 获取风速和体感温度
       var windSpeed = document.getElementById("windSpeed").value;
       var feltTemperature = document.getElementById("feltTemperature").value;
-  
+
+      // 判断风速是否合法
+    if (isNaN(windSpeed) || windSpeed < 0) {
+      document.getElementById("result").innerHTML = "别逗我了哥哥";
+      return;
+    }
+
+      // 判断体感温度是否合法
+      if (isNaN(feltTemperature) || feltTemperature < -40 || feltTemperature > 50) {
+        document.getElementById("result").innerHTML = "别逗我了哥哥";
+        return;
+  }
       // 计算风速指数
       var windIndex;
       if (windSpeed >= 2) {
@@ -20,23 +56,35 @@
       } else {
         windIndex = 1;
       }
-  
+     // 判断风速是否过大
+      if (windSpeed > 12) {
+        document.getElementById("result").innerHTML = "别出门了哥哥";
+        return;
+     }
+
       // 计算穿衣指数
       var dressingIndex = 0.61 * (27.8 - feltTemperature) / windIndex;
-  
+
       // 根据穿衣指数的值，输出不同的结果
       var resultElement = document.getElementById("result");
       if (dressingIndex < 1) {
-        resultElement.innerHTML = "穿短袖";
+        resultElement.innerHTML = "穿短衫、短裙 、短裤 、薄T恤 、短袖 、敞领短袖 、棉衫";
       } else if (dressingIndex < 1.6) {
-        resultElement.innerHTML = "穿长袖";
+        resultElement.innerHTML = "穿短裙、短裤 、衬衫 、短套装 、T恤";
+      } else if (dressingIndex < 4.1) {
+        resultElement.innerHTML = "穿单层薄衫裤 、薄型棉衫、针织长袖衫 、长袖T恤 、长裤 、薄型套装 、牛仔衫裤";
+      } else if (dressingIndex < 6.6) {
+        resultElement.innerHTML = "穿套装、夹衣 、风衣 、夹克衫 、西服套装 、马夹衬衫 +夹克衫配长裤";
+      } else if (dressingIndex < 10.1) {
+        resultElement.innerHTML = "穿风衣、大衣 、外套 、毛衣、毛套装 、夹大衣 、薄棉外套";
+      } else if (dressingIndex < 13.6) {
+        resultElement.innerHTML = "穿棉衣、冬大衣 、皮夹克 、内着衬衫或羊毛内衣 、毛衣 、外罩大衣";
+      } else if (dressingIndex < 18) {
+        resultElement.innerHTML = "穿棉衣、冬大衣 、皮夹克 、皮褛 、羊毛内衣、厚呢外衣 、呢帽 、手套";
       } else {
-        resultElement.innerHTML = "穿衬衫";
+        resultElement.innerHTML = "羽绒服 、风雪大衣 、裘皮大衣 、手套 、呢帽 、太空棉衣等";
       }
     }
   </script>
-  
-
-  
-  
+</body>
 </html>
