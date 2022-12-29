@@ -1,61 +1,40 @@
 <!DOCTYPE html> 
 <html>
-<head>
-</head>
-<body>
-  <script type="text/javascript">
-    var tJSON = {
-      长: 12,
-      高: 34,
-      宽: 0.34,
-      密度: 3.45,
-      体积: 423,
-      速度: 4.34,
-      重量: 234,
-      公式结果: 0
+  <form>
+    <label for="wind-speed">风速：</label><br>
+    <input type="number" id="wind-speed"><br>
+    <label for="body-temp">体感温度：</label><br>
+    <input type="number" id="body-temp"><br><br>
+    <button onclick="calculate()">计算穿衣指数</button>
+  </form> 
+  
+  <p id="result"></p>
+  
+  <script>
+  function calculate() {
+    // 获取输入的风速和体感温度
+    var windSpeed = document.getElementById("wind-speed").value;
+    var bodyTemp = document.getElementById("body-temp").value;
+    
+    // 计算风速指数
+    var windIndex;
+    if (windSpeed >= 2) {
+      windIndex = 0.884;
+    } else {
+      windIndex = 1;
     }
- 
- 
- 
-    function DoCal() {
-      var inStr = document.getElementById("TA").value;//函数
-      if (!inStr || inStr.length == 0) {
-        alert("请输入公式");
-        return;
-      }
-      var tArra = [];
-      tArra.push(" var ")
-      for (var key in tJSON) {
-        tArra.push(key);
-        tArra.push("=this.")
-        tArra.push(key);
-        tArra.push(",");
-      }
-      tArra.splice(tArra.length - 1, 1);
-      tArra.push(";\r\n return ");
-      tArra.push(inStr);
-      tArra.push(";");
-      var funcBody = tArra.join("");
- 
-      try {
-        var fun = new Function(funcBody);
-        var rtValue = fun.call(tJSON);
-        tJSON.公式结果 = rtValue;
-        alert(rtValue);
-      }
-      catch (e) {
-        alert(e.message);
-      }
+    
+    // 计算穿衣指数
+    var dressIndex = 0.61 * (27.8 - bodyTemp) / windIndex;
+    
+    // 根据穿衣指数的值输出结果
+    var result = document.getElementById("result");
+    if (dressIndex < 1) {
+      result.innerHTML = "穿短袖";
+    } else {
+      result.innerHTML = "穿长袖";
     }
+  }
   </script>
-  可用属性：<br />
-  {<br />
-  体感温度：26,<br />
-  风速：2,<br />
-  }<br />
-  计算公式<br />
-  <textarea id="TA">0.61*（27.8-体感温度)/风速</textarea>
-  <br />
-  <button onclick="DoCal()">计算</button>
-</body>
+  
 </html>
