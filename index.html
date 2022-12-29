@@ -1,42 +1,39 @@
 <!DOCTYPE html> 
 <html>
   <form>
-    风速：<input type="text" id="wind_speed"><br>
-    体感温度：<input type="text" id="feels_like_temperature"><br>
-    <button type="button" onclick="calculateDressingIndex()">计算穿衣指数</button>
+    风速：<input type="number" id="windSpeed"><br>
+    体感温度：<input type="number" id="feltTemperature"><br>
   </form>
+  <button onclick="calculateDressingIndex()">计算穿衣指数</button>
+  <div id="result"></div>
   
   <script>
     function calculateDressingIndex() {
-  // 获取输入的风速和体感温度
-  var windSpeed = document.getElementById("wind_speed").value;
-  var feelsLikeTemperature = document.getElementById("feels_like_temperature").value;
-
-  // 计算风速指数
-  var windSpeedIndex;
-  if (windSpeed >= 2) {
-    windSpeedIndex = 0.884;
-  } else {
-    windSpeedIndex = 1;
-  }
-
-  // 计算穿衣指数
-  var dressingIndex = 0.61 * (27.8 - feelsLikeTemperature) / windSpeedIndex;
-
-  // 根据穿衣指数判断穿衣建议
-  var suggestion;
-  if (dressingIndex < 1) {
-    suggestion = "穿短袖";
-  } else if (dressingIndex < 1.6) {
-    suggestion = "穿长袖";
-  } else {
-    suggestion = "穿衬衫";
-  }
-
-  // 在页面上显示穿衣建议
-  document.getElementById("result").innerHTML = "穿衣指数：" + dressingIndex + "，建议：" + suggestion;
-}
-
+      // 获取风速和体感温度
+      var windSpeed = document.getElementById("windSpeed").value;
+      var feltTemperature = document.getElementById("feltTemperature").value;
+  
+      // 计算风速指数
+      var windIndex;
+      if (windSpeed >= 2) {
+        windIndex = 0.884;
+      } else {
+        windIndex = 1;
+      }
+  
+      // 计算穿衣指数
+      var dressingIndex = 0.61 * (27.8 - feltTemperature) / windIndex;
+  
+      // 根据穿衣指数的值，输出不同的结果
+      var resultElement = document.getElementById("result");
+      if (dressingIndex < 1) {
+        resultElement.innerHTML = "穿短袖";
+      } else if (dressingIndex < 1.6) {
+        resultElement.innerHTML = "穿长袖";
+      } else {
+        resultElement.innerHTML = "穿衬衫";
+      }
+    }
   </script>
   
 
