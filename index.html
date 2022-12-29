@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html>
+<head>
+</head>
+<body>
+  <script type="text/javascript">
+    var tJSON = {
+      长: 12,
+      高: 34,
+      宽: 0.34,
+      密度: 3.45,
+      体积: 423,
+      速度: 4.34,
+      重量: 234,
+      公式结果: 0
+    }
+ 
+ 
+ 
+    function DoCal() {
+      var inStr = document.getElementById("TA").value;//函数
+      if (!inStr || inStr.length == 0) {
+        alert("请输入公式");
+        return;
+      }
+      var tArra = [];
+      tArra.push(" var ")
+      for (var key in tJSON) {
+        tArra.push(key);
+        tArra.push("=this.")
+        tArra.push(key);
+        tArra.push(",");
+      }
+      tArra.splice(tArra.length - 1, 1);
+      tArra.push(";\r\n return ");
+      tArra.push(inStr);
+      tArra.push(";");
+      var funcBody = tArra.join("");
+ 
+      try {
+        var fun = new Function(funcBody);
+        var rtValue = fun.call(tJSON);
+        tJSON.公式结果 = rtValue;
+        alert(rtValue);
+      }
+      catch (e) {
+        alert(e.message);
+      }
+    }
+  </script>
+  可用属性：<br />
+  {<br />
+  长: 12,<br />
+  高: 34,<br />
+  宽: 0.34,<br />
+  密度: 3.45,<br />
+  体积: 423,<br />
+  速度: 4.34,<br />
+  重量: 234,<br />
+  }<br />
+  计算公式<br />
+  <textarea id="TA">长*宽*高</textarea>
+  <br />
+  <button onclick="DoCal()">计算</button>
+</body>
+</html>
