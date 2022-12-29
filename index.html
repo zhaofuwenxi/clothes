@@ -8,7 +8,7 @@
     <button onclick="calculate()">计算穿衣指数</button>
   </form> 
   
-  <p id="result"></p>
+  <div id="result"></div>
   
   <script>
   function calculate() {
@@ -27,19 +27,16 @@
     // 计算穿衣指数
     var dressIndex = 0.61 * (27.8 - bodyTemp) / windIndex;
     
-    // 根据穿衣指数的值输出结果
+    // 根据穿衣指数的值更新页面上的结果
     var result = document.getElementById("result");
     if (dressIndex < 1) {
-      result.innerHTML = "穿短袖";
+      result.innerHTML = "根据输入的风速和体感温度，您应该穿短袖。";
     } else {
-      result.innerHTML = "穿长袖";
+      result.innerHTML = "根据输入的风速和体感温度，您应该穿长袖。";
     }
   }
-
-  var resultWindow = window.open();
-resultWindow.document.write("<p>根据输入的风速和体感温度，您应该" + result.innerHTML + "。</p>");
-
   </script>
+  
 
   
   
